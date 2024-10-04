@@ -10,11 +10,12 @@ def generate_password():
                'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
     numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
     symbols = ['!', '#', '$', '%', '&', '(', ')', '*', '+']
-    # Sets password length as default. This could be updated to have a slider for password length in the tkinter window
-    # which allows the user to choose how long to make it and randomly assigns nr_letters,nr_symbols, and nr_numbers
-    nr_letters = randint(8, 10)
-    nr_symbols = randint(2, 4)
-    nr_numbers = randint(2, 4)
+    length = int(spinbox.get())
+    nr_letters = randint(0, length-2)
+    length -= nr_letters
+    nr_symbols = randint(0, length-1)
+    length -= nr_symbols
+    nr_numbers = length
 
     password_list = ([choice(letters) for char in range(nr_letters)] + [choice(symbols) for char in range(nr_symbols)] +
                      [choice(numbers) for char in range(nr_numbers)])
@@ -71,6 +72,9 @@ password_entry.grid(column=1,row=3,sticky="W")
 
 gen_button = Button(text="Generate Password", command=generate_password)
 gen_button.grid(column=2,row=3,sticky="W")
+
+spinbox = Spinbox(from_=0, to=100, width=5)
+spinbox.grid(column=3,row=3)
 
 add_button = Button(text="Add", command=add_password,width=43)
 add_button.grid(column=1,row=4,columnspan=2,sticky="W")
